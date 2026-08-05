@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Auto Motion</title>
+
+<link rel="stylesheet" href="home style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+<h2>🎬 AI Motion</h2>
+</div>
+
+<ul>
+
+<li><a href="home.html">🏠 Home</a></li>
+
+<li><a href="generator.html">🎥 AI Generator</a></li>
+
+<li><a href="libaray.html">📚 Library</a></li>
+
+<li><a href="recent.html">🕒 Recent</a></li>
+
+<li><a href="profile.html">👤 Profile</a></li>
+
+<li><a href="setting.html">⚙ Settings</a></li>
+
+<li><a href="login.html">🔐 Login</a></li>
+
+<li><a href="signup.html">📝 Sign Up</a></li>
+
+<li><a href="logout.html">🚪 Logout</a></li>
+
+</ul>
+
+</div>
+
+
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>AI Auto Motion</h1>
+
+<input
+type="text"
+placeholder="Search...">
+
+</div>
+
+
+
+<div class="hero">
+
+<h1>Create Amazing AI Videos</h1>
+
+<p>Generate cinematic AI videos in seconds.</p>
+
+<textarea
+id="prompt"
+placeholder="Describe your video..."></textarea>
+
+<select id="style">
+
+<option>Cinematic</option>
+
+<option>Anime</option>
+
+<option>Fantasy</option>
+
+<option>Realistic</option>
+
+<option>3D Animation</option>
+
+</select>
+
+<input
+type="file"
+id="image"
+accept="image/*">
+
+<button onclick="generate()">
+
+Generate Video
+
+</button>
+
+<p id="status"></p>
+
+<video
+id="videoPlayer"
+controls
+style="display:none;width:100%;margin-top:20px;border-radius:15px;">
+</video>
+
+</div>
+
+
+
+<div class="cards">
+
+<div class="card">
+
+<h2>Trending</h2>
+
+<p>Best AI videos today.</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>My Videos</h2>
+
+<p>Your generated projects.</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Templates</h2>
+
+<p>Ready-made prompts.</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Community</h2>
+
+<p>Explore creators.</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

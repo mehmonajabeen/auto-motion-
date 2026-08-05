@@ -1,0 +1,179 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    background:#eef3f8;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:240px;
+    height:100vh;
+    background:linear-gradient(180deg,#0f172a,#1e3a8a);
+    color:#fff;
+    position:fixed;
+    left:0;
+    top:0;
+}
+
+.logo{
+    text-align:center;
+    padding:25px;
+    border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.logo h2{
+    font-size:24px;
+}
+
+.sidebar ul{
+    list-style:none;
+    margin-top:20px;
+}
+
+.sidebar ul li{
+    margin:10px;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:14px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active a{
+    background:#3b82f6;
+}
+
+/* Main */
+
+.main{
+    margin-left:240px;
+    width:100%;
+    padding:30px;
+}
+
+/* Top Bar */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.topbar h1{
+    color:#2563eb;
+}
+
+.topbar input{
+    width:300px;
+    max-width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+/* Recent Cards */
+
+.recent-list{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.recent-card{
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.recent-card:hover{
+    transform:translateY(-5px);
+}
+
+.recent-card h3{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.recent-card p{
+    color:#555;
+    margin:8px 0;
+}
+
+/* Buttons */
+
+.buttons{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+}
+
+.buttons button{
+    flex:1;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    background:#2563eb;
+    color:#fff;
+    transition:.3s;
+}
+
+.buttons button:hover{
+    background:#1d4ed8;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.sidebar{
+    width:70px;
+}
+
+.logo h2{
+    font-size:16px;
+}
+
+.sidebar ul li a{
+    text-align:center;
+    font-size:12px;
+    padding:10px;
+}
+
+.main{
+    margin-left:70px;
+    padding:20px;
+}
+
+.topbar{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.topbar input{
+    width:100%;
+}
+
+.buttons{
+    flex-direction:column;
+}
+
+}

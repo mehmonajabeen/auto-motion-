@@ -1,0 +1,39 @@
+
+app.listen(3000, () => {
+    console.log("🚀 Server running at http://localhost:3000");
+});const upload = document.getElementById("image");
+const preview = document.getElementById("preview");
+const prompt = document.getElementById("prompt");
+const status = document.getElementById("status");
+
+upload.addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+if(file){
+
+preview.src = URL.createObjectURL(file);
+preview.style.display = "block";
+
+}
+
+});
+
+function generate(){
+
+if(prompt.value.trim()==""){
+
+alert("Please enter a prompt.");
+return;
+
+}
+
+status.innerHTML="🤖 Generating...";
+
+setTimeout(()=>{
+
+status.innerHTML="✅ Finished! (Connect AI API here)";
+
+},3000);
+
+}
