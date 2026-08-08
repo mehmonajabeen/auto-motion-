@@ -1,0 +1,759 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AI Auto Motion - Create Video</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #eef6fa;
+    --card: #ffffff;
+    --text: #17212b;
+    --muted: #71808c;
+    --border: #dce7ed;
+    --primary: #08b9e5;
+    --primary-dark: #078eaf;
+    --shadow: 0 10px 35px rgba(20, 60, 80, 0.08);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 245px;
+    height: 100vh;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 25px 15px;
+    z-index: 10;
+}
+
+.logo {
+    padding: 10px 12px 30px;
+}
+
+.logo h2 {
+    color: var(--primary);
+    font-size: 23px;
+}
+
+.nav {
+    list-style: none;
+}
+
+.nav li {
+    margin: 7px 0;
+}
+
+.nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.25s;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: var(--primary);
+    color: white;
+}
+
+.nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 18px 5px;
+}
+
+.main {
+    margin-left: 245px;
+    padding: 35px;
+    min-height: 100vh;
+}
+
+.header {
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.creator {
+    max-width: 900px;
+    margin: auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.form-group {
+    margin-bottom: 23px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-weight: bold;
+}
+
+.prompt-box {
+    width: 100%;
+    min-height: 180px;
+    resize: vertical;
+    padding: 17px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #f7fafc;
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    outline: none;
+}
+
+.prompt-box:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(8,185,229,0.12);
+}
+
+.counter {
+    text-align: right;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: #f7fafc;
+    color: var(--text);
+    outline: none;
+}
+
+select:focus {
+    border-color: var(--primary);
+}
+
+.upload-box {
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.upload-box:hover {
+    border-color: var(--primary);
+    background: #f5fcfe;
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.upload-box p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+#image {
+    display: none;
+}
+
+.preview {
+    display: none;
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 15px auto 0;
+    border: 2px solid var(--primary);
+}
+
+.generate-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 16px;
+    border: none;
+    border-radius: 13px;
+    background: linear-gradient(
+        135deg,
+        #08b9e5,
+        #078eaf
+    );
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(8,185,229,0.25);
+}
+
+.generate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#status {
+    text-align: center;
+    margin-top: 18px;
+    color: var(--primary-dark);
+    font-weight: bold;
+    line-height: 1.7;
+}
+
+#videoPlayer {
+    display: none;
+    width: 100%;
+    max-height: 500px;
+    margin-top: 25px;
+    border-radius: 16px;
+    background: #000;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .nav-divider {
+        display: none;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .creator {
+        padding: 20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <h2>🎬 AI Motion</h2>
+    </div>
+
+    <ul class="nav">
+
+        <li>
+            <a href="index.html">
+                🏠 Home
+            </a>
+        </li>
+
+        <li>
+            <a href="prompte.html" class="active">
+                🎥 AI Generator
+            </a>
+        </li>
+
+        <li>
+            <a href="libaray.html">
+                📚 Library
+            </a>
+        </li>
+
+        <li>
+            <a href="recent.html">
+                🕒 Recent
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                👤 Profile
+            </a>
+        </li>
+
+        <div class="nav-divider"></div>
+
+        <li>
+            <a href="setting.html">
+                ⚙ Settings
+            </a>
+        </li>
+
+        <li>
+            <a href="logout.html">
+                🚪 Logout
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+
+<main class="main">
+
+    <a href="index.html" class="back">
+        ← Back to Home
+    </a>
+
+    <div class="header">
+
+        <h1>
+            🎬 Create Your AI Video
+        </h1>
+
+        <p>
+            Describe your idea and let AI Auto Motion
+            turn it into a video.
+        </p>
+
+    </div>
+
+    <div class="creator">
+
+        <div class="form-group">
+
+            <label for="prompt">
+                ✨ Describe Your Video
+            </label>
+
+            <textarea
+                id="prompt"
+                class="prompt-box"
+                maxlength="1000"
+                placeholder="Example: A Korean man walks through a rainy Seoul street at night, cinematic lighting, slow camera movement..."
+            ></textarea>
+
+            <div class="counter">
+                <span id="count">0</span> / 1000
+            </div>
+
+        </div>
+
+        <div class="options">
+
+            <div class="form-group">
+
+                <label>
+                    🎨 Style
+                </label>
+
+                <select id="style">
+
+                    <option value="Cinematic">
+                        Cinematic
+                    </option>
+
+                    <option value="Realistic">
+                        Realistic
+                    </option>
+
+                    <option value="Anime">
+                        Anime
+                    </option>
+
+                    <option value="Fantasy">
+                        Fantasy
+                    </option>
+
+                    <option value="3D Animation">
+                        3D Animation
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    ⏱ Duration
+                </label>
+
+                <select id="duration">
+
+                    <option value="5">
+                        5 Seconds
+                    </option>
+
+                    <option value="10">
+                        10 Seconds
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    📐 Aspect Ratio
+                </label>
+
+                <select id="ratio">
+
+                    <option value="16:9">
+                        16:9 Landscape
+                    </option>
+
+                    <option value="9:16">
+                        9:16 Vertical
+                    </option>
+
+                    <option value="1:1">
+                        1:1 Square
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                🖼️ Reference Image
+            </label>
+
+            <label
+                for="image"
+                class="upload-box"
+            >
+
+                <div class="upload-icon">
+                    📷
+                </div>
+
+                <p>
+                    Click to upload an image
+                </p>
+
+                <small>
+                    PNG, JPG or WEBP
+                </small>
+
+                <img
+                    id="preview"
+                    class="preview"
+                    alt="Image Preview"
+                >
+
+            </label>
+
+            <input
+                type="file"
+                id="image"
+                accept="image/*"
+            >
+
+        </div>
+
+        <button
+            type="button"
+            id="generateBtn"
+            class="generate-btn"
+        >
+            🚀 Generate Video
+        </button>
+
+        <p id="status"></p>
+
+        <video
+            id="videoPlayer"
+            controls
+        ></video>
+
+    </div>
+
+</main>
+
+
+<script>
+
+const promptInput =
+    document.getElementById("prompt");
+
+const styleInput =
+    document.getElementById("style");
+
+const durationInput =
+    document.getElementById("duration");
+
+const ratioInput =
+    document.getElementById("ratio");
+
+const imageInput =
+    document.getElementById("image");
+
+const preview =
+    document.getElementById("preview");
+
+const generateBtn =
+    document.getElementById("generateBtn");
+
+const status =
+    document.getElementById("status");
+
+const count =
+    document.getElementById("count");
+
+const videoPlayer =
+    document.getElementById("videoPlayer");
+
+
+// PROMPT COUNTER
+
+promptInput.addEventListener("input", function() {
+
+    count.textContent =
+        promptInput.value.length;
+
+});
+
+
+// IMAGE PREVIEW
+
+imageInput.addEventListener("change", function() {
+
+    const file =
+        imageInput.files[0];
+
+    if (file) {
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+    } else {
+
+        preview.style.display =
+            "none";
+
+    }
+
+});
+
+
+// GENERATE VIDEO
+
+generateBtn.addEventListener("click", async function() {
+
+    const prompt =
+        promptInput.value.trim();
+
+    if (!prompt) {
+
+        alert(
+            "Please enter a video prompt."
+        );
+
+        return;
+
+    }
+
+    generateBtn.disabled = true;
+
+    generateBtn.textContent =
+        "🤖 Generating...";
+
+    status.textContent =
+        "⏳ Sending your prompt to AI...";
+
+    try {
+
+        const response =
+            await fetch(
+                "/generate-video",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        prompt: prompt,
+
+                        style:
+                            styleInput.value,
+
+                        duration:
+                            Number(
+                                durationInput.value
+                            ),
+
+                        ratio:
+                            ratioInput.value
+
+                    })
+                }
+            );
+
+
+        const contentType =
+            response.headers.get(
+                "content-type"
+            );
+
+
+        if (
+            !contentType ||
+            !contentType.includes(
+                "application/json"
+            )
+        ) {
+
+            const serverResponse =
+                await response.text();
+
+            console.error(
+                "SERVER RESPONSE:",
+                serverResponse
+            );
+
+            throw new Error(
+                "Server returned HTML instead of JSON."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "SERVER DATA:",
+            data
+        );
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Video generation failed."
+            );
+
+        }
+
+
+        status.innerHTML =
+            "✅ Video generation started!<br>" +
+            "Task ID: " +
+            data.taskId;
+
+
+        generateBtn.textContent =
+            "✅ Generation Started";
+
+
+    } catch (error) {
+
+        console.error(
+            "ERROR:",
+            error
+        );
+
+        status.textContent =
+            "❌ " +
+            error.message;
+
+        generateBtn.disabled =
+            false;
+
+        generateBtn.textContent =
+            "🚀 Generate Video";
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
+```
