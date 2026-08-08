@@ -1,0 +1,183 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    background:#eef3f8;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:240px;
+    height:100vh;
+    background:linear-gradient(180deg,#0f172a,#1e3a8a);
+    color:#fff;
+    position:fixed;
+    left:0;
+    top:0;
+}
+
+.logo{
+    text-align:center;
+    padding:25px;
+    border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.logo h2{
+    font-size:24px;
+}
+
+.sidebar ul{
+    list-style:none;
+    margin-top:20px;
+}
+
+.sidebar ul li{
+    margin:10px;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:14px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active a{
+    background:#3b82f6;
+}
+
+/* Main */
+
+.main{
+    margin-left:240px;
+    width:100%;
+    padding:40px;
+}
+
+.main h1{
+    color:#2563eb;
+    margin-bottom:25px;
+}
+
+/* Profile Card */
+
+.profile-card{
+    max-width:700px;
+    margin:auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.1);
+    text-align:center;
+}
+
+.profile-card img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #2563eb;
+}
+
+.upload-btn{
+    margin:15px 0 25px;
+    padding:10px 20px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.upload-btn:hover{
+    background:#1d4ed8;
+}
+
+/* Form */
+
+form{
+    text-align:left;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#2563eb;
+}
+
+.save-btn{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#10b981;
+    color:#fff;
+    font-size:17px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#059669;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.sidebar{
+    width:70px;
+}
+
+.logo h2{
+    font-size:15px;
+}
+
+.sidebar ul li a{
+    font-size:11px;
+    text-align:center;
+    padding:10px;
+}
+
+.main{
+    margin-left:70px;
+    padding:20px;
+}
+
+.profile-card{
+    padding:20px;
+}
+
+.profile-card img{
+    width:110px;
+    height:110px;
+}
+
+}
