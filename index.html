@@ -1,151 +1,988 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Auto Motion</title>
 
-<link rel="stylesheet" href="home style.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Auto Motion</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #eef6fa;
+            --sidebar: #ffffff;
+            --card: #ffffff;
+            --text: #17212b;
+            --muted: #71808c;
+            --border: #dce7ed;
+            --primary: #08b9e5;
+            --primary-dark: #078eaf;
+            --shadow: 0 10px 35px rgba(20, 60, 80, 0.08);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 245px;
+            height: 100vh;
+
+            background: var(--sidebar);
+
+            border-right: 1px solid var(--border);
+
+            padding: 25px 15px;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+            padding: 10px 12px 30px;
+        }
+
+        .logo h2 {
+            color: var(--primary);
+            font-size: 23px;
+        }
+
+
+        .nav {
+            list-style: none;
+        }
+
+        .nav li {
+            margin: 7px 0;
+        }
+
+        .nav a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 15px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            color: var(--text);
+
+            font-size: 15px;
+
+            transition: 0.25s;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: var(--primary);
+
+            color: white;
+
+            transform: translateX(3px);
+        }
+
+
+        .nav-divider {
+            height: 1px;
+
+            background: var(--border);
+
+            margin: 18px 5px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+
+            min-height: 100vh;
+
+            padding: 25px 35px;
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .topbar h1 {
+            font-size: 27px;
+        }
+
+
+        .search {
+            width: 300px;
+
+            padding: 13px 17px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: var(--card);
+
+            color: var(--text);
+        }
+
+        .search:focus {
+            border-color: var(--primary);
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            position: relative;
+
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                #08b9e5,
+                #087fa4
+            );
+
+            color: white;
+
+            border-radius: 25px;
+
+            padding: 40px;
+
+            min-height: 310px;
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 30px;
+        }
+
+
+        .hero::after {
+            content: "🎬";
+
+            position: absolute;
+
+            right: 50px;
+
+            bottom: 20px;
+
+            font-size: 150px;
+
+            opacity: 0.12;
+        }
+
+
+        .hero h2 {
+            font-size: 38px;
+
+            max-width: 600px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .hero p {
+            font-size: 17px;
+
+            opacity: 0.9;
+
+            max-width: 600px;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+        }
+
+
+        .start-btn {
+            display: inline-block;
+
+            padding: 14px 24px;
+
+            background: white;
+
+            color: #087fa4;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+
+        /* ================= QUICK CARDS ================= */
+
+        .quick-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .quick-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-4px);
+        }
+
+
+        .quick-icon {
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #e4f9ff;
+
+            font-size: 23px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .quick-card h3 {
+            margin-bottom: 7px;
+        }
+
+        .quick-card p {
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+
+        /* ================= SECTION HEADER ================= */
+
+        .section-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+        }
+
+        .view-all {
+            color: var(--primary-dark);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= VIDEO CARDS ================= */
+
+        .video-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .video-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.25s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+        }
+
+
+        .video-preview {
+            height: 175px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #172b38,
+                #07546c
+            );
+
+            color: white;
+
+            font-size: 55px;
+        }
+
+
+        .video-info {
+            padding: 17px;
+        }
+
+        .video-info h3 {
+            margin-bottom: 7px;
+
+            font-size: 16px;
+        }
+
+        .video-info p {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        /* ================= TEMPLATES ================= */
+
+        .template-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+
+        .template {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            padding: 22px;
+
+            transition: 0.25s;
+        }
+
+        .template:hover {
+            border-color: var(--primary);
+
+            transform: translateY(-3px);
+        }
+
+
+        .template-icon {
+            font-size: 35px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .template h3 {
+            margin-bottom: 8px;
+        }
+
+        .template p {
+            color: var(--muted);
+
+            line-height: 1.5;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 45px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border-top: 1px solid var(--border);
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 1000px) {
+
+            .quick-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .video-grid,
+            .template-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                border-right: none;
+
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav {
+                display: flex;
+
+                flex-wrap: wrap;
+            }
+
+            .nav li {
+                margin: 3px;
+            }
+
+            .nav-divider {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h2 {
+                font-size: 29px;
+            }
+
+            .quick-grid,
+            .video-grid,
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="sidebar">
 
-<div class="logo">
-<h2>🎬 AI Motion</h2>
-</div>
+<!-- ================= SIDEBAR ================= -->
 
-<ul>
+<aside class="sidebar">
 
-<li><a href="home.html">🏠 Home</a></li>
+    <div class="logo">
 
-<li><a href="generator.html">🎥 AI Generator</a></li>
+        <h2>🎬 AI Motion</h2>
 
-<li><a href="libaray.html">📚 Library</a></li>
+    </div>
 
-<li><a href="recent.html">🕒 Recent</a></li>
 
-<li><a href="profile.html">👤 Profile</a></li>
+    <ul class="nav">
 
-<li><a href="setting.html">⚙ Settings</a></li>
+        <li>
+            <a href="index.html" class="active">
+                🏠 Home
+            </a>
+        </li>
 
-<li><a href="login.html">🔐 Login</a></li>
+        <li>
+            <a href="gentrater.html">
+                🎥 AI Generator
+            </a>
+        </li>
 
-<li><a href="signup.html">📝 Sign Up</a></li>
+        <li>
+            <a href="libaray.html">
+                📚 Library
+            </a>
+        </li>
 
-<li><a href="logout.html">🚪 Logout</a></li>
+        <li>
+            <a href="recent.html">
+                🕒 Recent
+            </a>
+        </li>
 
-</ul>
+        <li>
+            <a href="profile.html">
+                👤 Profile
+            </a>
+        </li>
 
-</div>
 
+        <div class="nav-divider"></div>
 
 
-<div class="main">
+        <li>
+            <a href="setting.html">
+                ⚙ Settings
+            </a>
+        </li>
 
-<div class="topbar">
+        <li>
+            <a href="login.html">
+                🔐 Login
+            </a>
+        </li>
 
-<h1>AI Auto Motion</h1>
+        <li>
+            <a href="signup.html">
+                📝 Sign Up
+            </a>
+        </li>
 
-<input
-type="text"
-placeholder="Search...">
+        <li>
+            <a href="logout.html">
+                🚪 Logout
+            </a>
+        </li>
 
-</div>
+    </ul>
 
+</aside>
 
 
-<div class="hero">
 
-<h1>Create Amazing AI Videos</h1>
+<!-- ================= MAIN ================= -->
 
-<p>Generate cinematic AI videos in seconds.</p>
+<main class="main">
 
-<textarea
-id="prompt"
-placeholder="Describe your video..."></textarea>
 
-<select id="style">
+    <!-- TOP BAR -->
 
-<option>Cinematic</option>
+    <div class="topbar">
 
-<option>Anime</option>
+        <h1>Welcome to AI Auto Motion 👋</h1>
 
-<option>Fantasy</option>
+        <input
+            type="search"
+            class="search"
+            id="search"
+            placeholder="🔍 Search videos, templates..."
+        >
 
-<option>Realistic</option>
+    </div>
 
-<option>3D Animation</option>
 
-</select>
 
-<input
-type="file"
-id="image"
-accept="image/*">
+    <!-- HERO -->
 
-<button onclick="generate()">
+    <section class="hero">
 
-Generate Video
+        <h2>
+            Create Amazing AI Videos
+        </h2>
 
-</button>
+        <p>
+            Turn your ideas, images and prompts into
+            cinematic AI videos in seconds.
+            Create, edit and explore your imagination
+            with AI Auto Motion.
+        </p>
 
-<p id="status"></p>
+        <a
+            href="gentrater.html"
+            class="start-btn"
+        >
+            🎬 Start Creating
+        </a>
 
-<video
-id="videoPlayer"
-controls
-style="display:none;width:100%;margin-top:20px;border-radius:15px;">
-</video>
+    </section>
 
-</div>
 
 
+    <!-- QUICK ACTIONS -->
 
-<div class="cards">
+    <div class="quick-grid">
 
-<div class="card">
 
-<h2>Trending</h2>
+        <div class="quick-card">
 
-<p>Best AI videos today.</p>
+            <div class="quick-icon">
+                🎥
+            </div>
 
-</div>
+            <h3>AI Generator</h3>
 
+            <p>
+                Generate videos from your ideas.
+            </p>
 
-<div class="card">
+        </div>
 
-<h2>My Videos</h2>
 
-<p>Your generated projects.</p>
+        <div class="quick-card">
 
-</div>
+            <div class="quick-icon">
+                🖼️
+            </div>
 
+            <h3>Image to Video</h3>
 
-<div class="card">
+            <p>
+                Turn images into moving scenes.
+            </p>
 
-<h2>Templates</h2>
+        </div>
 
-<p>Ready-made prompts.</p>
 
-</div>
+        <div class="quick-card">
 
+            <div class="quick-icon">
+                ✨
+            </div>
 
-<div class="card">
+            <h3>AI Effects</h3>
 
-<h2>Community</h2>
+            <p>
+                Add creative effects to your videos.
+            </p>
 
-<p>Explore creators.</p>
+        </div>
 
-</div>
 
-</div>
+        <div class="quick-card">
 
-</div>
+            <div class="quick-icon">
+                📚
+            </div>
 
-<script src="script.js"></script>
+            <h3>My Library</h3>
+
+            <p>
+                View your generated projects.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- RECENT VIDEOS -->
+
+    <div class="section-header">
+
+        <h2>🕒 Recent Videos</h2>
+
+        <a
+            href="recent.html"
+            class="view-all"
+        >
+            View All →
+        </a>
+
+    </div>
+
+
+    <div class="video-grid">
+
+
+        <div class="video-card">
+
+            <div class="video-preview">
+                🎬
+            </div>
+
+            <div class="video-info">
+
+                <h3>
+                    Cinematic Girl
+                </h3>
+
+                <p>
+                    AI Generated • Today
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="video-card">
+
+            <div class="video-preview">
+                🌌
+            </div>
+
+            <div class="video-info">
+
+                <h3>
+                    Fantasy World
+                </h3>
+
+                <p>
+                    AI Generated • Yesterday
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="video-card">
+
+            <div class="video-preview">
+                🌃
+            </div>
+
+            <div class="video-info">
+
+                <h3>
+                    Neon City
+                </h3>
+
+                <p>
+                    AI Generated • 2 days ago
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- TEMPLATES -->
+
+    <div class="section-header">
+
+        <h2>✨ Popular Templates</h2>
+
+        <a
+            href="gentrater.html"
+            class="view-all"
+        >
+            Explore →
+        </a>
+
+    </div>
+
+
+    <div class="template-grid">
+
+
+        <div class="template">
+
+            <div class="template-icon">
+                🎞️
+            </div>
+
+            <h3>
+                Cinematic
+            </h3>
+
+            <p>
+                Create dramatic cinematic
+                scenes with realistic motion.
+            </p>
+
+        </div>
+
+
+        <div class="template">
+
+            <div class="template-icon">
+                🎨
+            </div>
+
+            <h3>
+                Anime
+            </h3>
+
+            <p>
+                Turn your ideas into
+                beautiful animated scenes.
+            </p>
+
+        </div>
+
+
+        <div class="template">
+
+            <div class="template-icon">
+                🧙
+            </div>
+
+            <h3>
+                Fantasy
+            </h3>
+
+            <p>
+                Create magical worlds,
+                characters and adventures.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 AI Auto Motion.
+            Create. Imagine. Move.
+        </p>
+
+    </footer>
+
+
+</main>
+
+
+
+<script>
+
+    /* ================= SEARCH ================= */
+
+    const search = document.getElementById("search");
+
+    search.addEventListener("input", function () {
+
+        const value =
+            this.value.toLowerCase();
+
+        const cards =
+            document.querySelectorAll(
+                ".video-card, .template"
+            );
+
+        cards.forEach(function (card) {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            if (text.includes(value)) {
+
+                card.style.display = "";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+</script>
+
 
 </body>
+
 </html>
